@@ -7,12 +7,15 @@ void main() {
 }
 
 class IITMadras extends StatelessWidget {
-  const IITMadras({ Key? key }) : super(key: key);
+  const IITMadras({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          fontFamily: 'BeVietnamPro',
+          appBarTheme: AppBarTheme(backgroundColor: Color(0xff79201B))),
       home: AuthPage(),
     );
   }

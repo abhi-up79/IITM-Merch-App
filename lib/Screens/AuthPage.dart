@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iit_madras_merchandise/Screens/CreateProfile.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -55,7 +56,13 @@ class AuthPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(40))),
                         side: MaterialStateProperty.all(
                             const BorderSide(width: 2, color: Colors.white))),
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO : Add google Sign In Logic
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => CreateProfilePage()));
+                    },
                     child: const Text("Sign In with Google",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold))),
