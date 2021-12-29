@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "62743344659",
+    "project_id": "iit-madras-merchandise-s-20bb5",
+    "storage_bucket": "iit-madras-merchandise-s-20bb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62743344659:android:ad319f9d27d73b587331e6",
+        "android_client_info": {
+          "package_name": "com.example.iit_madras_merchandise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62743344659-kdrfnr2jj6obrqg04es93ldt8u3igres.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iit_madras_merchandise",
+            "certificate_hash": "49d2f469fecf40bc8b073296cd2e9cd40b12351c"
+          }
+        },
+        {
+          "client_id": "62743344659-7eh9ndpjncmjptqsm0vl5i160n07vqht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaa14YgZSWgd6SwRJz38ql692rJUPgK-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62743344659-7eh9ndpjncmjptqsm0vl5i160n07vqht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
