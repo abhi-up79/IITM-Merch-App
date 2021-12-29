@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:iit_madras_merchandise/Screens/CreateProfile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
+
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignIn googleSignIn = new GoogleSignIn();
+  GoogleSignInAccount? signedAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +67,42 @@ class AuthPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(40))),
                         side: MaterialStateProperty.all(
                             const BorderSide(width: 2, color: Colors.white))),
-                    onPressed: () {
-                      //TODO : Add google Sign In Logic
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => CreateProfilePage()));
+                    onPressed: () async {
+                      await googleSignIn.signOut();
+                      try {
+                        signedAccount = await googleSignIn.signIn();
+                        if (signedAccount != null) {
+                          debugPrint("Authentication Successful");
+                          print('Signed In from ${signedAccount!.email}');
+                          GoogleSignInAuthentication gauth =
+                              await signedAccount!.authentication;
+                          final AuthCredential credential =
+                              GoogleAuthProvider.credential(
+                            accessToken: gauth.accessToken,
+                            idToken: gauth.idToken,
+                          );
+                          UserCredential login =
+                              await auth.signInWithCredential(credential);
+                          if (login != null) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => CreateProfilePage()));
+                          } else {
+                            await googleSignIn.signOut();
+                            await auth.signOut();
+                          }
+                        } else {
+                          debugPrint("Authentication Failed");
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => CreateProfilePage()));
                     },
                     child: const Text("Sign In with Google",
                         style: TextStyle(
