@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_madras_merchandise/Screens/CreateProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:iit_madras_merchandise/Screens/ProductCatlog.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -84,10 +86,38 @@ class _AuthPageState extends State<AuthPage> {
                           UserCredential login =
                               await auth.signInWithCredential(credential);
                           if (login != null) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => CreateProfilePage()));
+                            // TODO: 1) Query the user with Firebase and check if profile exists in user Collection
+                            // If yes route to Product Catlog Page
+                            // Else route to Create Profile Page
+
+                            //Query
+                            FirebaseAuth auth = FirebaseAuth.instance;
+                            FirebaseFirestore firestore =
+                                FirebaseFirestore.instance;
+                            await firestore
+                                .collection('Users')
+                                .where('email',
+                                    isEqualTo: auth.currentUser!.email)
+                                .get()
+                                .then((value) {
+                              debugPrint(value.docs.length.toString());
+                              if (value.docs.length == 0) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => CreateProfilePage()));
+                              } else {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ProductCatlog()));
+                              }
+                            });
+
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (_) => CreateProfilePage()));
                           } else {
                             await googleSignIn.signOut();
                             await auth.signOut();
@@ -98,11 +128,6 @@ class _AuthPageState extends State<AuthPage> {
                       } catch (e) {
                         print(e);
                       }
-
-                      // Navigator.pushReplacement(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (_) => CreateProfilePage()));
                     },
                     child: const Text("Sign In with Google",
                         style: TextStyle(
