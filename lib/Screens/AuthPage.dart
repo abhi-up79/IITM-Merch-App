@@ -86,10 +86,6 @@ class _AuthPageState extends State<AuthPage> {
                           UserCredential login =
                               await auth.signInWithCredential(credential);
                           if (login != null) {
-                            // TODO: 1) Query the user with Firebase and check if profile exists in user Collection
-                            // If yes route to Product Catlog Page
-                            // Else route to Create Profile Page
-
                             //Query
                             FirebaseAuth auth = FirebaseAuth.instance;
                             FirebaseFirestore firestore =
@@ -113,11 +109,6 @@ class _AuthPageState extends State<AuthPage> {
                                         builder: (_) => ProductCatlog()));
                               }
                             });
-
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (_) => CreateProfilePage()));
                           } else {
                             await googleSignIn.signOut();
                             await auth.signOut();
